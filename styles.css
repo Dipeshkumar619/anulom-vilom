@@ -3,6 +3,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
@@ -38,4 +39,17 @@ h1 {
     transform: translate(-50%, -50%);
     max-width: 50px; /* Adjust as needed */
     display: none;
+}
+
+.dropdown-container {
+    margin-top: 20px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+select {
+    margin-right: 20px;
+    padding: 5px;
 }
