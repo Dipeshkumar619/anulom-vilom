@@ -63,3 +63,12 @@ button {
     background-color: #007BFF;
     color: white;
 }
+
+.time-container {
+    margin-top: 20px;
+}
+
+#totalTime {
+    font-size: 18px;
+    color: #333;
+}
