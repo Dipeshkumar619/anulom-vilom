@@ -20,8 +20,22 @@ h1 {
     color: #333;
 }
 
-img {
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.nose-image {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
+}
+
+.inhalation-sign {
+    position: absolute;
+    top: 20%; /* Adjust as needed */
+    left: 50%; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+    max-width: 50px; /* Adjust as needed */
+    display: none;
 }
