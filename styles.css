@@ -1,55 +1,35 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-}
+document.addEventListener('DOMContentLoaded', function () {
+    const inhalationSign = document.querySelector('.inhalation-sign');
+    let isVisible = false;
 
-.container {
-    text-align: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    setInterval(() => {
+        if (isVisible) {
+            inhalationSign.style.display = 'none';
+        } else {
+            inhalationSign.style.display = 'block';
+        }
+        isVisible = !isVisible;
+    }, 1000); // Adjust the interval as needed (1000ms = 1s)
 
-h1 {
-    color: #333;
-}
+    // Populate dropdowns
+    const inhaleSelect = document.getElementById('inhale');
+    const holdSelect = document.getElementById('hold');
+    const exhaleSelect = document.getElementById('exhale');
 
-.image-container {
-    position: relative;
-    display: inline-block;
-}
+    for (let i = 1; i <= 20; i++) {
+        const inhaleOption = document.createElement('option');
+        inhaleOption.value = i;
+        inhaleOption.textContent = i;
+        inhaleSelect.appendChild(inhaleOption);
 
-.nose-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
+        const holdOption = document.createElement('option');
+        holdOption.value = i;
+        holdOption.textContent = i;
+        holdSelect.appendChild(holdOption);
 
-.inhalation-sign {
-    position: absolute;
-    top: 20%; /* Adjust as needed */
-    left: 50%; /* Adjust as needed */
-    transform: translate(-50%, -50%);
-    max-width: 50px; /* Adjust as needed */
-    display: none;
-}
-
-.dropdown-container {
-    margin-top: 20px;
-}
-
-label {
-    margin-right: 10px;
-}
-
-select {
-    margin-right: 20px;
-    padding: 5px;
-}
+        const exhaleOption = document.createElement('option');
+        exhaleOption.value = i;
+        exhaleOption.textContent = i;
+        exhaleSelect.appendChild(exhaleOption);
+    }
+});
