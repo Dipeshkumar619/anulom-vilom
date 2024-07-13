@@ -31,6 +31,11 @@ document.addEventListener('DOMContentLoaded', function () {
         countSelect.appendChild(countOption);
     }
 
+    // Set default values
+    inhaleSelect.value = 4;
+    holdSelect.value = 4;
+    exhaleSelect.value = 4;
+
     // Calculate and display total time in hours, minutes, and seconds
     function calculateTotalTime() {
         const inhaleTime = parseInt(inhaleSelect.value) || 0;
@@ -58,4 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Start button clicked!');
         // Add your start functionality here
     });
+
+    // Initial calculation
+    calculateTotalTime();
 });
