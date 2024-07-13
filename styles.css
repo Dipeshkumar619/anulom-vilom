@@ -1,4 +1,4 @@
-body {
+.body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -24,6 +24,10 @@ h1 {
 .image-container {
     position: relative;
     display: inline-block;
+    margin-top: 20px; /* Adjust as needed */
+    width: 300px; /* Adjust as needed */
+    height: 300px; /* Adjust as needed */
+    overflow: hidden;
 }
 
 .nose-image {
@@ -32,43 +36,26 @@ h1 {
     border-radius: 10px;
 }
 
-.inhalation-sign, .exhalation-sign {
+.inhalation-sign {
     position: absolute;
-    top: 20%; /* Adjust as needed */
-    left: 50%; /* Adjust as needed */
-    transform: translate(-50%, -50%);
+    bottom: 0;
+    left: 0;
+    transform: translate(0, 50%);
     max-width: 50px; /* Adjust as needed */
 }
 
-.dropdown-container {
-    margin-top: 20px;
+.exhalation-sign {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(0, 50%);
+    max-width: 50px; /* Adjust as needed */
 }
 
-label {
-    margin-right: 10px;
-}
-
-select {
-    margin-right: 20px;
-    padding: 5px;
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
-}
-
-.time-container {
-    margin-top: 20px;
-}
-
-#totalTime {
-    font-size: 18px;
-    color: #333;
+.hold-sign {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 50px; /* Adjust as needed */
 }
