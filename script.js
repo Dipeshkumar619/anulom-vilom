@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const holdSelect = document.getElementById('hold');
     const exhaleSelect = document.getElementById('exhale');
     const countSelect = document.getElementById('count');
+    const totalTimeDisplay = document.getElementById('totalTime');
+    const startButton = document.getElementById('startButton');
 
     for (let i = 1; i <= 20; i++) {
         const inhaleOption = document.createElement('option');
@@ -29,8 +31,29 @@ document.addEventListener('DOMContentLoaded', function () {
         countSelect.appendChild(countOption);
     }
 
+    // Calculate and display total time in hours, minutes, and seconds
+    function calculateTotalTime() {
+        const inhaleTime = parseInt(inhaleSelect.value) || 0;
+        const holdTime = parseInt(holdSelect.value) || 0;
+        const exhaleTime = parseInt(exhaleSelect.value) || 0;
+        const count = parseInt(countSelect.value) || 0;
+
+        const totalTimeInSeconds = (inhaleTime + holdTime + exhaleTime) * count;
+
+        const hours = Math.floor(totalTimeInSeconds / 3600);
+        const minutes = Math.floor((totalTimeInSeconds % 3600) / 60);
+        const seconds = totalTimeInSeconds % 60;
+
+        totalTimeDisplay.textContent = `Total Time Taken: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    }
+
+    // Add event listeners to dropdowns to recalculate total time when changed
+    inhaleSelect.addEventListener('change', calculateTotalTime);
+    holdSelect.addEventListener('change', calculateTotalTime);
+    exhaleSelect.addEventListener('change', calculateTotalTime);
+    countSelect.addEventListener('change', calculateTotalTime);
+
     // Start button event listener
-    const startButton = document.getElementById('startButton');
     startButton.addEventListener('click', function() {
         alert('Start button clicked!');
         // Add your start functionality here
