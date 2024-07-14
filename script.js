@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('startButton');
     const timerDisplay = document.createElement('p'); // Create a timer display element
     const actionDisplay = document.createElement('p'); // Create an action display element
+    actionDisplay.id = 'actionDisplay'; // Set id for action display
     const totalRemainingDisplay = document.createElement('p'); // Create a total remaining time display element
+    totalRemainingDisplay.id = 'totalRemainingDisplay'; // Set id for total remaining display
     const inhalationSign = document.querySelector('.inhalation-sign');
     const exhalationSign = document.querySelector('.exhalation-sign');
     const holdSign = document.querySelector('.hold-sign');
