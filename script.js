@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('startButton');
     const timerDisplay = document.createElement('p'); // Create a timer display element
     const actionDisplay = document.createElement('p'); // Create an action display element
+    const inhalationSign = document.querySelector('.inhalation-sign');
+    const exhalationSign = document.querySelector('.exhalation-sign');
+    const holdSign = document.querySelector('.hold-sign');
+
     document.body.appendChild(timerDisplay); // Append timer display to body
     document.body.appendChild(actionDisplay); // Append action display to body
 
@@ -76,10 +80,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = inhaleTime;
             actionDisplay.textContent = 'Inhale';
             actionDisplay.style.color = 'green';
+            inhalationSign.style.display = 'block';
+            holdSign.style.display = 'none';
+            exhalationSign.style.display = 'none';
             const inhaleInterval = setInterval(() => {
                 timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
                 if (timeLeft <= 0) {
                     clearInterval(inhaleInterval);
+                    inhalationSign.style.display = 'none';
                     runHold();
                 }
                 timeLeft--;
@@ -90,10 +98,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = holdTime;
             actionDisplay.textContent = 'Hold';
             actionDisplay.style.color = 'orange';
+            holdSign.style.display = 'block';
+            inhalationSign.style.display = 'none';
+            exhalationSign.style.display = 'none';
             const holdInterval = setInterval(() => {
                 timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
                 if (timeLeft <= 0) {
                     clearInterval(holdInterval);
+                    holdSign.style.display = 'none';
                     runExhale();
                 }
                 timeLeft--;
@@ -104,10 +116,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = exhaleTime;
             actionDisplay.textContent = 'Exhale';
             actionDisplay.style.color = 'blue';
+            exhalationSign.style.display = 'block';
+            inhalationSign.style.display = 'none';
+            holdSign.style.display = 'none';
             const exhaleInterval = setInterval(() => {
                 timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
                 if (timeLeft <= 0) {
                     clearInterval(exhaleInterval);
+                    exhalationSign.style.display = 'none';
                     currentCount++;
                     if (currentCount < count) {
                         runInhale();
