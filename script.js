@@ -8,12 +8,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('startButton');
     const timerDisplay = document.createElement('p'); // Create a timer display element
     const actionDisplay = document.createElement('p'); // Create an action display element
+    const totalRemainingDisplay = document.createElement('p'); // Create a total remaining time display element
     const inhalationSign = document.querySelector('.inhalation-sign');
     const exhalationSign = document.querySelector('.exhalation-sign');
     const holdSign = document.querySelector('.hold-sign');
 
     document.body.appendChild(timerDisplay); // Append timer display to body
     document.body.appendChild(actionDisplay); // Append action display to body
+    document.body.appendChild(totalRemainingDisplay); // Append total remaining display to body
 
     for (let i = 1; i <= 20; i++) {
         const inhaleOption = document.createElement('option');
@@ -59,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const seconds = totalTimeInSeconds % 60;
 
         totalTimeDisplay.textContent = `Total Time Taken: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+        return totalTimeInSeconds;
     }
 
     // Add event listeners to dropdowns to recalculate total time when changed
@@ -67,7 +70,17 @@ document.addEventListener('DOMContentLoaded', function () {
     exhaleSelect.addEventListener('change', calculateTotalTime);
     countSelect.addEventListener('change', calculateTotalTime);
 
+    // Function to update total remaining time
+    function updateTotalRemainingTime(totalRemainingTime) {
+        const hours = Math.floor(totalRemainingTime / 3600);
+        const minutes = Math.floor((totalRemainingTime % 3600) / 60);
+        const seconds = totalRemainingTime % 60;
+        totalRemainingDisplay.textContent = `Total Time Left: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    }
+
     // Function to run the breathing sequence
+    let intervals = []; // Store intervals to clear them later
+
     function runSequence() {
         const inhaleTime = parseInt(inhaleSelect.value);
         const holdTime = parseInt(holdSelect.value);
@@ -75,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const count = parseInt(countSelect.value);
 
         let currentCount = 0;
+        let totalRemainingTime = calculateTotalTime();
 
         function runInhale() {
             let timeLeft = inhaleTime;
@@ -85,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
             exhalationSign.style.display = 'none';
             const inhaleInterval = setInterval(() => {
                 timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                totalRemainingTime--;
+                updateTotalRemainingTime(totalRemainingTime);
                 if (timeLeft <= 0) {
                     clearInterval(inhaleInterval);
                     inhalationSign.style.display = 'none';
@@ -92,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 timeLeft--;
             }, 1000);
+            intervals.push(inhaleInterval);
         }
 
         function runHold() {
@@ -103,6 +120,8 @@ document.addEventListener('DOMContentLoaded', function () {
             exhalationSign.style.display = 'none';
             const holdInterval = setInterval(() => {
                 timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                totalRemainingTime--;
+                updateTotalRemainingTime(totalRemainingTime);
                 if (timeLeft <= 0) {
                     clearInterval(holdInterval);
                     holdSign.style.display = 'none';
@@ -110,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 timeLeft--;
             }, 1000);
+            intervals.push(holdInterval);
         }
 
         function runExhale() {
@@ -121,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
             holdSign.style.display = 'none';
             const exhaleInterval = setInterval(() => {
                 timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                totalRemainingTime--;
+                updateTotalRemainingTime(totalRemainingTime);
                 if (timeLeft <= 0) {
                     clearInterval(exhaleInterval);
                     exhalationSign.style.display = 'none';
@@ -130,18 +152,33 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         actionDisplay.textContent = 'Sequence complete';
                         timerDisplay.textContent = '';
+                        startButton.textContent = 'Start';
                     }
                 }
                 timeLeft--;
             }, 1000);
+            intervals.push(exhaleInterval);
         }
 
         runInhale();
     }
 
-    // Start button event listener
-    startButton.addEventListener('click', function() {
-        runSequence();
+    // Start/Stop button event listener
+    startButton.addEventListener('click', function () {
+        if (startButton.textContent === 'Start') {
+            startButton.textContent = 'Stop';
+            runSequence();
+        } else {
+            startButton.textContent = 'Start';
+            actionDisplay.textContent = '';
+            timerDisplay.textContent = '';
+            totalRemainingDisplay.textContent = '';
+            inhalationSign.style.display = 'none';
+            holdSign.style.display = 'none';
+            exhalationSign.style.display = 'none';
+            intervals.forEach(interval => clearInterval(interval));
+            intervals = [];
+        }
     });
 
     // Initial calculation
