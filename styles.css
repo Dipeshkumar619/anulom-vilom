@@ -1,70 +1,96 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Populate dropdowns
-    const inhaleSelect = document.getElementById('inhale');
-    const holdSelect = document.getElementById('hold');
-    const exhaleSelect = document.getElementById('exhale');
-    const countSelect = document.getElementById('count');
-    const totalTimeDisplay = document.getElementById('totalTime');
-    const startButton = document.getElementById('startButton');
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
 
-    for (let i = 1; i <= 20; i++) {
-        const inhaleOption = document.createElement('option');
-        inhaleOption.value = i;
-        inhaleOption.textContent = i;
-        inhaleSelect.appendChild(inhaleOption);
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-        const holdOption = document.createElement('option');
-        holdOption.value = i;
-        holdOption.textContent = i;
-        holdSelect.appendChild(holdOption);
+h1 {
+    color: #333;
+}
 
-        const exhaleOption = document.createElement('option');
-        exhaleOption.value = i;
-        exhaleOption.textContent = i;
-        exhaleSelect.appendChild(exhaleOption);
-    }
+.image-container {
+    position: relative;
+    display: inline-block;
+}
 
-    for (let i = 1; i <= 200; i++) {
-        const countOption = document.createElement('option');
-        countOption.value = i;
-        countOption.textContent = i;
-        countSelect.appendChild(countOption);
-    }
+.nose-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
 
-    // Set default values
-    inhaleSelect.value = 4;
-    holdSelect.value = 4;
-    exhaleSelect.value = 4;
-    countSelect.value = 10;
+.inhalation-sign,
+.exhalation-sign,
+.hold-sign {
+    position: absolute;
+    max-width: 50px; /* Adjust as needed */
+    display: none; /* Hide by default */
+}
 
-    // Calculate and display total time in hours, minutes, and seconds
-    function calculateTotalTime() {
-        const inhaleTime = parseInt(inhaleSelect.value) || 0;
-        const holdTime = parseInt(holdSelect.value) || 0;
-        const exhaleTime = parseInt(exhaleSelect.value) || 0;
-        const count = parseInt(countSelect.value) || 0;
+.inhalation-sign {
+    bottom: 10px;
+    left: 10px;
+}
 
-        const totalTimeInSeconds = (inhaleTime + holdTime + exhaleTime) * count;
+.exhalation-sign {
+    bottom: 10px;
+    right: 10px;
+}
 
-        const hours = Math.floor(totalTimeInSeconds / 3600);
-        const minutes = Math.floor((totalTimeInSeconds % 3600) / 60);
-        const seconds = totalTimeInSeconds % 60;
+.hold-sign {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-        totalTimeDisplay.textContent = `Total Time Taken: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
-    }
+.dropdown-container {
+    margin-top: 20px;
+}
 
-    // Add event listeners to dropdowns to recalculate total time when changed
-    inhaleSelect.addEventListener('change', calculateTotalTime);
-    holdSelect.addEventListener('change', calculateTotalTime);
-    exhaleSelect.addEventListener('change', calculateTotalTime);
-    countSelect.addEventListener('change', calculateTotalTime);
+label {
+    margin-right: 10px;
+}
 
-    // Start button event listener
-    startButton.addEventListener('click', function() {
-        alert('Start button clicked!');
-        // Add your start functionality here
-    });
+select {
+    margin-right: 20px;
+    padding: 5px;
+}
 
-    // Initial calculation
-    calculateTotalTime();
-});
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+}
+
+.time-container {
+    margin-top: 20px;
+}
+
+#totalTime {
+    font-size: 18px;
+    color: #333;
+}
+
+.timer-display,
+.action-display {
+    margin-top: 10px;
+    font-size: 18px;
+}
