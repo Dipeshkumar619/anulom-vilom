@@ -153,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         actionDisplay.textContent = 'Sequence complete';
                         timerDisplay.textContent = '';
                         startButton.textContent = 'Start';
+                        totalTimeDisplay.style.display = 'block'; // Show total time taken
                     }
                 }
                 timeLeft--;
@@ -167,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
     startButton.addEventListener('click', function () {
         if (startButton.textContent === 'Start') {
             startButton.textContent = 'Stop';
+            totalTimeDisplay.style.display = 'none'; // Hide total time taken
             runSequence();
         } else {
             startButton.textContent = 'Start';
@@ -178,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
             exhalationSign.style.display = 'none';
             intervals.forEach(interval => clearInterval(interval));
             intervals = [];
+            totalTimeDisplay.style.display = 'block'; // Show total time taken
         }
     });
 
