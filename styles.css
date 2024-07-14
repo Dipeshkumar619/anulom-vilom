@@ -1,43 +1,34 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
+    text-align: center;
     margin: 0;
+    padding: 0;
     background-color: #f0f0f0;
 }
 
-.container {
-    text-align: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 h1 {
-    color: #333;
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    margin: 0;
 }
 
-.image-container {
+#noseContainer {
     position: relative;
     display: inline-block;
+    margin-top: 20px;
 }
 
-.nose-image {
-    max-width: 100%;
+#nose {
+    width: 300px;
     height: auto;
-    border-radius: 10px;
 }
 
-.inhalation-sign,
-.exhalation-sign,
-.hold-sign {
+.inhalation-sign, .exhalation-sign, .hold-sign {
     position: absolute;
-    max-width: 50px; /* Adjust as needed */
-    display: none; /* Hide by default */
+    display: none;
+    width: 100px;
+    height: auto;
 }
 
 .inhalation-sign {
@@ -52,45 +43,26 @@ h1 {
 
 .hold-sign {
     bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: calc(50% - 50px);
 }
 
-.dropdown-container {
-    margin-top: 20px;
-}
-
-label {
-    margin-right: 10px;
-}
-
-select {
-    margin-right: 20px;
-    padding: 5px;
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
+select, button {
     font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
+    padding: 5px;
+    margin: 10px;
 }
 
-.time-container {
-    margin-top: 20px;
-}
-
-#totalTime {
-    font-size: 18px;
-    color: #333;
-}
-
-.timer-display,
-.action-display {
+#totalTime, #totalRemainingDisplay {
+    font-size: 1.5em;
     margin-top: 10px;
-    font-size: 18px;
+}
+
+#actionDisplay {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#startButton {
+    font-size: 16px;
+    padding: 10px 20px;
 }
