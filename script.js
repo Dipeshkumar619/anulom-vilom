@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const countSelect = document.getElementById('count');
     const totalTimeDisplay = document.getElementById('totalTime');
     const startButton = document.getElementById('startButton');
+    const timerDisplay = document.createElement('p'); // Create a timer display element
+    const actionDisplay = document.createElement('p'); // Create an action display element
+    document.body.appendChild(timerDisplay); // Append timer display to body
+    document.body.appendChild(actionDisplay); // Append action display to body
 
     for (let i = 1; i <= 20; i++) {
         const inhaleOption = document.createElement('option');
@@ -35,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     inhaleSelect.value = 4;
     holdSelect.value = 4;
     exhaleSelect.value = 4;
+    countSelect.value = 10;
 
     // Calculate and display total time in hours, minutes, and seconds
     function calculateTotalTime() {
@@ -58,10 +63,69 @@ document.addEventListener('DOMContentLoaded', function () {
     exhaleSelect.addEventListener('change', calculateTotalTime);
     countSelect.addEventListener('change', calculateTotalTime);
 
+    // Function to run the breathing sequence
+    function runSequence() {
+        const inhaleTime = parseInt(inhaleSelect.value);
+        const holdTime = parseInt(holdSelect.value);
+        const exhaleTime = parseInt(exhaleSelect.value);
+        const count = parseInt(countSelect.value);
+
+        let currentCount = 0;
+
+        function runInhale() {
+            let timeLeft = inhaleTime;
+            actionDisplay.textContent = 'Inhale';
+            actionDisplay.style.color = 'green';
+            const inhaleInterval = setInterval(() => {
+                timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                if (timeLeft <= 0) {
+                    clearInterval(inhaleInterval);
+                    runHold();
+                }
+                timeLeft--;
+            }, 1000);
+        }
+
+        function runHold() {
+            let timeLeft = holdTime;
+            actionDisplay.textContent = 'Hold';
+            actionDisplay.style.color = 'orange';
+            const holdInterval = setInterval(() => {
+                timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                if (timeLeft <= 0) {
+                    clearInterval(holdInterval);
+                    runExhale();
+                }
+                timeLeft--;
+            }, 1000);
+        }
+
+        function runExhale() {
+            let timeLeft = exhaleTime;
+            actionDisplay.textContent = 'Exhale';
+            actionDisplay.style.color = 'blue';
+            const exhaleInterval = setInterval(() => {
+                timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                if (timeLeft <= 0) {
+                    clearInterval(exhaleInterval);
+                    currentCount++;
+                    if (currentCount < count) {
+                        runInhale();
+                    } else {
+                        actionDisplay.textContent = 'Sequence complete';
+                        timerDisplay.textContent = '';
+                    }
+                }
+                timeLeft--;
+            }, 1000);
+        }
+
+        runInhale();
+    }
+
     // Start button event listener
     startButton.addEventListener('click', function() {
-        alert('Start button clicked!');
-        // Add your start functionality here
+        runSequence();
     });
 
     // Initial calculation
