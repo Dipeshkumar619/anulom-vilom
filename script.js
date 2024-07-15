@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const exhaleTime = parseInt(exhaleSelect.value) || 0;
         const count = parseInt(countSelect.value) || 0;
 
-        const totalTimeInSeconds = (inhaleTime + holdTime + exhaleTime) * count;
+        const totalTimeInSeconds = (inhaleTime + holdTime + exhaleTime + inhaleTime + holdTime + exhaleTime) * count;
 
         const hours = Math.floor(totalTimeInSeconds / 3600);
         const minutes = Math.floor((totalTimeInSeconds % 3600) / 60);
@@ -92,9 +92,9 @@ document.addEventListener('DOMContentLoaded', function () {
         let currentCount = 0;
         let totalRemainingTime = calculateTotalTime();
 
-        function runInhale() {
+        function runInhaleLeft() {
             let timeLeft = inhaleTime;
-            actionDisplay.textContent = 'Inhale';
+            actionDisplay.textContent = 'Inhale (Left)';
             actionDisplay.style.color = 'green';
             inhalationSign.style.display = 'block';
             holdSign.style.display = 'none';
@@ -106,14 +106,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (timeLeft <= 0) {
                     clearInterval(inhaleInterval);
                     inhalationSign.style.display = 'none';
-                    runHold();
+                    runHoldLeft();
                 }
                 timeLeft--;
             }, 1000);
             intervals.push(inhaleInterval);
         }
 
-        function runHold() {
+        function runHoldLeft() {
             let timeLeft = holdTime;
             actionDisplay.textContent = 'Hold';
             actionDisplay.style.color = 'orange';
@@ -127,16 +127,79 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (timeLeft <= 0) {
                     clearInterval(holdInterval);
                     holdSign.style.display = 'none';
-                    runExhale();
+                    runExhaleRight();
                 }
                 timeLeft--;
             }, 1000);
             intervals.push(holdInterval);
         }
 
-        function runExhale() {
+        function runExhaleRight() {
             let timeLeft = exhaleTime;
-            actionDisplay.textContent = 'Exhale';
+            actionDisplay.textContent = 'Exhale (Right)';
+            actionDisplay.style.color = 'blue';
+            exhalationSign.style.display = 'block';
+            inhalationSign.style.display = 'none';
+            holdSign.style.display = 'none';
+            const exhaleInterval = setInterval(() => {
+                timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                totalRemainingTime--;
+                updateTotalRemainingTime(totalRemainingTime);
+                if (timeLeft <= 0) {
+                    clearInterval(exhaleInterval);
+                    exhalationSign.style.display = 'none';
+                    runInhaleRight();
+                }
+                timeLeft--;
+            }, 1000);
+            intervals.push(exhaleInterval);
+        }
+
+        function runInhaleRight() {
+            let timeLeft = inhaleTime;
+            actionDisplay.textContent = 'Inhale (Right)';
+            actionDisplay.style.color = 'green';
+            inhalationSign.style.display = 'block';
+            holdSign.style.display = 'none';
+            exhalationSign.style.display = 'none';
+            const inhaleInterval = setInterval(() => {
+                timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                totalRemainingTime--;
+                updateTotalRemainingTime(totalRemainingTime);
+                if (timeLeft <= 0) {
+                    clearInterval(inhaleInterval);
+                    inhalationSign.style.display = 'none';
+                    runHoldRight();
+                }
+                timeLeft--;
+            }, 1000);
+            intervals.push(inhaleInterval);
+        }
+
+        function runHoldRight() {
+            let timeLeft = holdTime;
+            actionDisplay.textContent = 'Hold';
+            actionDisplay.style.color = 'orange';
+            holdSign.style.display = 'block';
+            inhalationSign.style.display = 'none';
+            exhalationSign.style.display = 'none';
+            const holdInterval = setInterval(() => {
+                timerDisplay.textContent = `Time left: ${timeLeft} seconds`;
+                totalRemainingTime--;
+                updateTotalRemainingTime(totalRemainingTime);
+                if (timeLeft <= 0) {
+                    clearInterval(holdInterval);
+                    holdSign.style.display = 'none';
+                    runExhaleLeft();
+                }
+                timeLeft--;
+            }, 1000);
+            intervals.push(holdInterval);
+        }
+
+        function runExhaleLeft() {
+            let timeLeft = exhaleTime;
+            actionDisplay.textContent = 'Exhale (Left)';
             actionDisplay.style.color = 'blue';
             exhalationSign.style.display = 'block';
             inhalationSign.style.display = 'none';
@@ -150,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     exhalationSign.style.display = 'none';
                     currentCount++;
                     if (currentCount < count) {
-                        runInhale();
+                        runInhaleLeft();
                     } else {
                         actionDisplay.textContent = 'Sequence complete';
                         timerDisplay.textContent = '';
@@ -163,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
             intervals.push(exhaleInterval);
         }
 
-        runInhale();
+        runInhaleLeft();
     }
 
     // Start/Stop button event listener
