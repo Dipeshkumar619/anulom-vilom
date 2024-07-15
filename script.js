@@ -226,29 +226,4 @@ document.addEventListener('DOMContentLoaded', function () {
             intervals.push(exhaleInterval);
         }
 
-        runInhaleLeft();
-    }
-
-    // Start/Stop button event listener
-    startButton.addEventListener('click', function () {
-        if (startButton.textContent === 'Start') {
-            startButton.textContent = 'Stop';
-            totalTimeDisplay.style.display = 'none'; // Hide total time taken
-            runSequence();
-        } else {
-            startButton.textContent = 'Start';
-            actionDisplay.textContent = '';
-            timerDisplay.textContent = '';
-            totalRemainingDisplay.textContent = '';
-            inhalationSign.style.display = 'none';
-            holdSign.style.display = 'none';
-            exhalationSign.style.display = 'none';
-            intervals.forEach(interval => clearInterval(interval));
-            intervals = [];
-            totalTimeDisplay.style.display = 'block'; // Show total time taken
-        }
-    });
-
-    // Initial calculation
-    calculateTotalTime();
-});
+        runInhale
