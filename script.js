@@ -96,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = inhaleTime;
             actionDisplay.textContent = 'Inhale (Left)';
             actionDisplay.style.color = 'green';
+            actionDisplay.style.fontWeight = 'bold';
+            actionDisplay.style.fontSize = '2em';
             inhalationSign.style.display = 'block';
             holdSign.style.display = 'none';
             exhalationSign.style.display = 'none';
@@ -117,6 +119,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = holdTime;
             actionDisplay.textContent = 'Hold';
             actionDisplay.style.color = 'orange';
+            actionDisplay.style.fontWeight = 'bold';
+            actionDisplay.style.fontSize = '2em';
             holdSign.style.display = 'block';
             inhalationSign.style.display = 'none';
             exhalationSign.style.display = 'none';
@@ -138,6 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = exhaleTime;
             actionDisplay.textContent = 'Exhale (Right)';
             actionDisplay.style.color = 'blue';
+            actionDisplay.style.fontWeight = 'bold';
+            actionDisplay.style.fontSize = '2em';
             exhalationSign.style.display = 'block';
             inhalationSign.style.display = 'none';
             holdSign.style.display = 'none';
@@ -159,6 +165,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = inhaleTime;
             actionDisplay.textContent = 'Inhale (Right)';
             actionDisplay.style.color = 'green';
+            actionDisplay.style.fontWeight = 'bold';
+            actionDisplay.style.fontSize = '2em';
             inhalationSign.style.display = 'block';
             holdSign.style.display = 'none';
             exhalationSign.style.display = 'none';
@@ -180,6 +188,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = holdTime;
             actionDisplay.textContent = 'Hold';
             actionDisplay.style.color = 'orange';
+            actionDisplay.style.fontWeight = 'bold';
+            actionDisplay.style.fontSize = '2em';
             holdSign.style.display = 'block';
             inhalationSign.style.display = 'none';
             exhalationSign.style.display = 'none';
@@ -201,6 +211,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let timeLeft = exhaleTime;
             actionDisplay.textContent = 'Exhale (Left)';
             actionDisplay.style.color = 'blue';
+            actionDisplay.style.fontWeight = 'bold';
+            actionDisplay.style.fontSize = '2em';
             exhalationSign.style.display = 'block';
             inhalationSign.style.display = 'none';
             holdSign.style.display = 'none';
@@ -226,4 +238,29 @@ document.addEventListener('DOMContentLoaded', function () {
             intervals.push(exhaleInterval);
         }
 
-        runInhale
+        runInhaleLeft();
+    }
+
+    // Start/Stop button event listener
+    startButton.addEventListener('click', function () {
+        if (startButton.textContent === 'Start') {
+            startButton.textContent = 'Stop';
+            totalTimeDisplay.style.display = 'none'; // Hide total time taken
+            runSequence();
+        } else {
+            startButton.textContent = 'Start';
+            actionDisplay.textContent = '';
+            timerDisplay.textContent = '';
+            totalRemainingDisplay.textContent = '';
+            inhalationSign.style.display = 'none';
+            holdSign.style.display = 'none';
+            exhalationSign.style.display = 'none';
+            intervals.forEach(interval => clearInterval(interval));
+            intervals = [];
+            totalTimeDisplay.style.display = 'block'; // Show total time taken
+        }
+    });
+
+    // Initial calculation
+    calculateTotalTime();
+});
